@@ -1,7 +1,7 @@
 {
     "dependencies": {
         "@ar-js-org/ar.js": "^3.3.2-es6-beta-01",
-        "aframe": "^1.2.0",
+        "aframe": "1.2.0",
         "aframe-look-at-component": "^1.0.0",
         "jsfreemaplib": "^0.4.0"
 

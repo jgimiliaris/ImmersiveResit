@@ -4,8 +4,11 @@ import 'aframe';
 
 import { GoogleProjection } from 'jsfreemaplib';
 
+
 //my form to check if the browser updates the version!
 alert('jsrunning2221ab222111aaaaasssww2345678wdfuver111ver1.2.21');
+
+alert('jsresource22');
 
 
 
@@ -47,60 +50,112 @@ AFRAME.registerComponent('peakf', {
 
             const points = await resp.json();
 
+            console.log(points);
+
 
             points.features.forEach(point => {
 
 
-                // plane noticeboard ISSUE ISSUE NOT SHOWING UP IN THE END RESULT
 
-                const planeEntity = document.createElement('a-plane');
+                if (point.properties.amenity == 'cafe') {
+                    const planeEntity = document.createElement('a-plane');
 
-                planeEntity.setAttribute('gps-projected-entity-place', {
-                    latitude: point.geometry.coordinates[1],
-                    longitude: point.geometry.coordinates[0]
-                });
+                    planeEntity.setAttribute('gps-projected-entity-place', {
+                        latitude: point.geometry.coordinates[1],
+                        longitude: point.geometry.coordinates[0]
+                    });
 
-                planeEntity.setAttribute('width', 4);
-                planeEntity.setAttribute('height', 1)
+                    planeEntity.setAttribute('width', 42);
+                    planeEntity.setAttribute('height', 10)
 
-                planeEntity.setAttribute('material', {
-                    color: 'green'
-                });
-
-
-                planeEntity.setAttribute('look-at', '[gps-projected-camera]');
-
-                planeEntity.setAttribute('text', {
-                    value: point.properties.name || 'no name'
-                });
+                    planeEntity.setAttribute('material', {
+                        color: 'green'
+                    });
 
 
+                    planeEntity.setAttribute('look-at', '[gps-projected-camera]');
 
-                //SIMPLE TEXT
+                    planeEntity.setAttribute('text', {
+                        value: point.properties.name || 'no name'
+                    });
 
-
-                const textEntity = document.createElement('a-text');
-
-                textEntity.setAttribute('gps-projected-entity-place', {
-                    latitude: point.geometry.coordinates[1],
-                    longitude: point.geometry.coordinates[0]
-                });
-
-                // Set the scale of the text
-                textEntity.setAttribute('scale', {
-                    x: 1000,
-                    y: 1000,
-                    z: 1000
-                });
-                textEntity.setAttribute('look-at', '[gps-projected-camera]');
-                textEntity.setAttribute('align', 'center');
-                textEntity.setAttribute('value', point.properties.name || 'No name');
-
-                // Add the  ENTITIES to the scene
+                    this.el.sceneEl.appendChild(planeEntity);
 
 
-                this.el.sceneEl.appendChild(textEntity);
-                this.el.sceneEl.appendChild(planeEntity);
+                    const coneEntity = document.createElement('a-cone');
+
+                    coneEntity.setAttribute('material', {
+                        color: 'blue'
+                    });
+
+
+                    coneEntity.setAttribute('radius-bottom', 2);
+                    coneEntity.setAttribute('radius-top', 0.5);
+
+                    coneEntity.setAttribute('gps-projected-entity-place', {
+                        latitude: point.geometry.coordinates[1],
+                        longitude: point.geometry.coordinates[0]
+                    });
+
+                    this.el.sceneEl.appendChild(coneEntity);
+
+
+                }
+
+                else if (point.properties.amenity == 'restaurant') {
+                    const planeEntity = document.createElement('a-plane');
+
+                    planeEntity.setAttribute('gps-projected-entity-place', {
+                        latitude: point.geometry.coordinates[1],
+                        longitude: point.geometry.coordinates[0]
+                    });
+
+                    planeEntity.setAttribute('width', 42);
+                    planeEntity.setAttribute('height', 10)
+
+                    planeEntity.setAttribute('material', {
+                        color: 'red'
+                    });
+
+
+                    planeEntity.setAttribute('look-at', '[gps-projected-camera]');
+
+                    planeEntity.setAttribute('text', {
+                        value: point.properties.name || 'no name'
+                    });
+
+                    this.el.sceneEl.appendChild(planeEntity);
+
+
+
+
+                    const cubeEntity = document.createElement('a-sphere');
+                    cubeEntity.setAttribute('scale', {
+                        x: 2,
+                        y: 4,
+                        z: 2
+                    });
+
+                    cubeEntity.setAttribute('gps-projected-entity-place', {
+                        latitude: point.geometry.coordinates[1],
+                        longitude: point.geometry.coordinates[0]
+                    });
+
+                    this.el.sceneEl.appendChild(cubeEntity);
+                }
+
+
+
+
+
+
+                //cubeEntity.setAttribute
+
+
+
+                
+
+
 
             });
 
