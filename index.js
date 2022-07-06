@@ -5,10 +5,7 @@ import 'aframe';
 import { GoogleProjection } from 'jsfreemaplib';
 
 
-//my form to check if the browser updates the version!
-alert('jsrunning2221ab222111aaaaasssww2345678wdfuver111ver1.2.21');
 
-alert('jsresource22');
 
 
 
@@ -50,8 +47,6 @@ AFRAME.registerComponent('peakf', {
 
             const points = await resp.json();
 
-            console.log(points);
-
 
             points.features.forEach(point => {
 
@@ -79,6 +74,10 @@ AFRAME.registerComponent('peakf', {
                         value: point.properties.name || 'no name'
                     });
 
+                    planeEntity.setAttribute("clicker", {
+                        name: point.properties.name
+                    });
+
                     this.el.sceneEl.appendChild(planeEntity);
 
 
@@ -98,6 +97,9 @@ AFRAME.registerComponent('peakf', {
                     });
 
                     this.el.sceneEl.appendChild(coneEntity);
+
+
+
 
 
                 }
@@ -124,6 +126,10 @@ AFRAME.registerComponent('peakf', {
                         value: point.properties.name || 'no name'
                     });
 
+                    planeEntity.setAttribute("clicker", {
+                        name: point.properties.name
+                    });
+
                     this.el.sceneEl.appendChild(planeEntity);
 
 
@@ -144,21 +150,64 @@ AFRAME.registerComponent('peakf', {
                     this.el.sceneEl.appendChild(cubeEntity);
                 }
 
+                else {
+                    const planeEntity = document.createElement('a-plane');
+
+                    planeEntity.setAttribute('gps-projected-entity-place', {
+                        latitude: point.geometry.coordinates[1],
+                        longitude: point.geometry.coordinates[0]
+                    });
+
+                    planeEntity.setAttribute('width', 42);
+                    planeEntity.setAttribute('height', 10)
+
+                    planeEntity.setAttribute('material', {
+                        color: 'magenta'
+                    });
+
+
+                    planeEntity.setAttribute('look-at', '[gps-projected-camera]');
+
+                    planeEntity.setAttribute('text', {
+                        value: point.properties.name || 'no name'
+                    });
+
+                    this.el.sceneEl.appendChild(planeEntity);
+
+                }
 
 
 
 
 
-                //cubeEntity.setAttribute
 
 
 
-                
+
+
+
+
+
+
 
 
 
             });
 
+        });
+    }
+});
+
+AFRAME.registerComponent('clicker', {
+    schema: {
+        name: {
+            type: 'string',
+            default: '',
+        }
+    },
+    init: function() {
+        this.el.addEventListener('click', e=> {
+            alert(`${this.data.name}, is the location you clicked.`);
         });
     }
 });
